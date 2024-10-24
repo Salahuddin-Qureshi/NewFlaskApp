@@ -1,191 +1,190 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Get Started | Recipe Generator</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f0f4f8;
-                margin: 0;
-                padding: 0;
-                color: #333;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                text-align: center;
-                padding-top: 60px;
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started | Recipe Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            padding-top: 60px;
+        }
 
-            nav {
-                width: 100%;
-                background-color: #2c3e50;
-                padding: 15px;
-                position: fixed;
-                top: 0;
-                left: 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                z-index: 1000;
-            }
+        nav {
+            width: 100%;
+            background-color: #2c3e50;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
 
-            nav .logo {
-                font-size: 1.5rem;
-                color: #fff;
-                font-weight: bold;
-                padding-left: 20px;
-            }
+        nav .logo {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+            padding-left: 20px;
+        }
 
-            nav ul {
-                list-style: none;
-                margin: 0;
-                padding-right: 20px;
-                display: flex;
-            }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding-right: 20px;
+            display: flex;
+        }
 
-            nav ul li {
-                margin-left: 20px;
-            }
+        nav ul li {
+            margin-left: 20px;
+        }
 
-            nav ul li a {
-                color: #fff;
-                text-decoration: none;
-                font-size: 1.1rem;
-                padding: 10px 20px;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-            nav ul li a.active {
-                background-color: #3498db;
-                color: #fff;
-            }
+        nav ul li a.active {
+            background-color: #3498db;
+            color: #fff;
+        }
 
-            nav ul li a:hover {
-                background-color: #3498db;
-            }
+        nav ul li a:hover {
+            background-color: #3498db;
+        }
 
-            .container {
-                text-align: center;
-                padding: 100px 20px;
-            }
+        .container {
+            text-align: center;
+            padding: 100px 20px;
+        }
 
-            .container h1 {
-                font-size: 48px;
-                margin-bottom: 20px;
-                color: #333;
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            }
+        .container h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-            .container p {
-                font-size: 24px;
-                margin-bottom: 30px;
-                color: #333;
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            }
+        .container p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
 
-            #imageContainer {
-                margin: 0 auto;
-                max-width: 80%;
-                margin-top: 30px;
-            }
+        #imageContainer {
+            margin: 0 auto;
+            max-width: 80%;
+            margin-top: 30px;
+        }
 
-            #uploadedImage {
-                max-width: 100%;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            }
+        #uploadedImage {
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
 
-            input[type="file"] {
-                display: none;
-            }
+        input[type="file"] {
+            display: none;
+        }
 
-            label.upload-btn {
-                background-color: #91ccf4dc;
-                color: #333;
-                text-decoration: none;
-                font-size: 1.1rem;
-                padding: 10px 20px;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
+        label.upload-btn {
+            background-color: #91ccf4dc;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-            label.upload-btn:hover {
-                background-color: #3498db;
-            }
+        label.upload-btn:hover {
+            background-color: #3498db;
+        }
 
-            button {
-                background-color: #91ccf4dc;
-                color: #333;
-                text-decoration: none;
-                font-size: 1.1rem;
-                padding: 10px 20px;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
+        button {
+            background-color: #91ccf4dc;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
 
-            button:hover {
-                background-color: #3498db;
-            }
+        button:hover {
+            background-color: #3498db;
+        }
 
-            #recipeOutput {
-                color: #333;
-                font-size: large;
-                margin-top: 20px;
-                padding: 20px;
-                text-align: left;
-                background-color: #91ccf4dc;
-                border-radius: 5px;
-                display: inline-block;
-                max-width: 80%;
-            }
+        #recipeOutput {
+            color: #333;
+            font-size: large;
+            margin-top: 20px;
+            padding: 20px;
+            text-align: left;
+            background-color: #91ccf4dc;
+            border-radius: 5px;
+            display: inline-block;
+            max-width: 80%;
+        }
 
-            .recipe-section {
-                margin-bottom: 20px;
-            }
+        .recipe-section {
+            margin-bottom: 20px;
+        }
 
-            .recipe-section h2 {
-                font-size: 28px;
-                margin-bottom: 10px;
-            }
+        .recipe-section h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
 
-            .recipe-section p {
-                font-size: 18px;
-                line-height: 1.6;
-            }
+        .recipe-section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
 
-            .recipe-section ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
+        .recipe-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-            .recipe-section ul li {
-                background: #333;
-                padding: 10px;
-                margin-bottom: 5px;
-                border-radius: 5px;
-            }
+        .recipe-section ul li {
+            background: #333;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
 
-            footer {
-                margin-top: 20px;
-                font-size: 0.9rem;
-                color: #777;
-            }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
 
-            /* Style for the speaker icon */
-            .speaker-icon {
-                cursor: pointer;
-                font-size: 24px;
-                margin-top: 10px;
-            }
+        /* Style for the speaker icon */
+        .speaker-icon {
+            cursor: pointer;
+            font-size: 24px;
+            margin-top: 10px;
+        }
 
-            /* Style for the rating stars */
-    /* Updated styles for the rating stars */
-    .rating {
+        /* Style for the rating stars */
+        .rating {
             display: flex;
             justify-content: center;
             margin-top: 15px;
@@ -211,97 +210,103 @@
         .rating label:hover ~ label {
             color: #f39c12; /* Star color on hover */
         }
-        </style>
-    </head>
-    <body>
+    </style>
+</head>
+<body>
 
-        <nav>
-            <span class="logo">Recipe Generator</span>
-            <ul>
-                <li><a href="{{ url_for('home') }}" class="active">Back to Profile</a></li>
-            </ul>
-        </nav>
+    <nav>
+        <span class="logo">Recipe Generator</span>
+        <ul>
+            <li><a href="{{ url_for('home') }}" class="active">Back to Profile</a></li>
+        </ul>
+    </nav>
 
-        <div class="container">
-            <h1>Generate your food recipe here!</h1>
-            <p>Discover delicious and nutritious recipes tailored to your tastes. Eating healthy has never been easier!</p>
-            <form id="imageForm" method="post" enctype="multipart/form-data">
-                <input type="file" id="imageInput" name="image" accept="image/*" onchange="previewImage()">
-                <label for="imageInput" class="upload-btn">Upload Image</label>
-                <button type="submit" id="generateBtn">Generate Recipe</button>
-            </form>
-            <div id="imageContainer">
-                <img id="uploadedImage" src="{{ image_path if image_path else '#' }}" alt="Uploaded Image" width="500px" height="400px">
-            </div>
-            <div id="recipeOutput">
-                {% if prediction %}
-                    <div class="recipe-section">
-                        <h2>Predicted Food: {{ prediction }}</h2>
-                    </div>
-                    <div class="recipe-section">
-                        <h2>Instructions:</h2>
-                        <p id="recipeText">
-                            {% for line in recipe.split('\n') %}
-                                {% if not line.startswith('-') %}
-                                    {{ line }}<br>
-                                {% endif %}
-                            {% endfor %}
-                        </p>
-                    </div>
-                    <!-- Speaker icon to trigger speech or stop -->
-                    <span class="speaker-icon" onclick="toggleSpeech()">🔊</span>
-                    <!-- Recipe rating system -->
-    <!-- Recipe rating system -->
-    <div class="rating">
-        <input type="radio" id="star5" name="rating" value="5">
-        <label for="star5">★</label>
-        <input type="radio" id="star4" name="rating" value="4">
-        <label for="star4">★</label>
-        <input type="radio" id="star3" name="rating" value="3">
-        <label for="star3">★</label>
-        <input type="radio" id="star2" name="rating" value="2">
-        <label for="star2">★</label>
-        <input type="radio" id="star1" name="rating" value="1">
-        <label for="star1">★</label>
-    </div>
-                    <!-- Add to favorites form -->
-                    <form method="post" action="{{ url_for('add_to_favorites') }}">
-                        <input type="hidden" name="dish_name" value="{{ prediction }}">
-                        <button type="submit">Add to Favorites</button>
-                    </form>
-                {% else %}
-                    Upload an image to generate a recipe. Once uploaded, click 'Generate Recipe' to see your dish!
-                {% endif %}
-            </div>
+    <div class="container">
+        <h1>Generate Your Next Recipe Adventure! ✨</h1>
+        <p>Craving something delicious? 🍔 Upload your food photo and we’ll do the rest. Let's turn your culinary dreams into reality! 🥗</p>
+        <form id="imageForm" method="post" enctype="multipart/form-data" onsubmit="showGeneratingMessage()">
+            <input type="file" id="imageInput" name="image" accept="image/*" onchange="previewImage()">
+            <label for="imageInput" class="upload-btn">📸 Upload Food Image</label>
+            <button type="submit" id="generateBtn">🍽️ Generate Recipe</button>
+        </form>
+        <div id="imageContainer">
+            <img id="uploadedImage" src="{{ image_path if image_path else '#' }}" alt="Uploaded Image" width="500px" height="400px">
         </div>
+        <div id="recipeOutput">
+            {% if prediction %}
+                <div class="recipe-section">
+                    <h2>Predicted Dish: {{ prediction }} 🍽️</h2>
+                </div>
+                <div class="recipe-section">
+                    <h2>🍳 Instructions:</h2>
+                    <p id="recipeText">
+                        {% for line in recipe.split('\n') %}
+                            {% if not line.startswith('-') %}
+                                {{ line }}<br>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+                <!-- Speaker icon to trigger speech or stop -->
+                <span class="speaker-icon" onclick="toggleSpeech()">🔊</span>
+                <!-- Recipe rating system -->
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                </div>
+                <!-- Add to favorites form -->
+                <form method="post" action="{{ url_for('add_to_favorites') }}">
+                    <input type="hidden" name="dish_name" value="{{ prediction }}">
+                    <button type="submit">❤️ Add to Favorites</button>
+                </form>
+            {% else %}
+                <p id="generateText">Upload your dish and click "Generate Recipe" to see what tasty treat awaits you! 🌟</p>
+            {% endif %}
+        </div>
+    </div>
 
-        <footer>
-            &copy; 2024 Recipe Generator. All rights reserved.
-        </footer>
+    <footer>
+        &copy; 2024 Recipe Generator. All rights reserved.
+    </footer>
 
-        <script>
-            let speech = new SpeechSynthesisUtterance();
-            let isSpeaking = false;  // Track if the speech is ongoing
+    <script>
+        let speech = new SpeechSynthesisUtterance();
+        let isSpeaking = false;  // Track if the speech is ongoing
 
-            function previewImage() {
-                var fileInput = document.getElementById('imageInput');
-                var uploadedImage = document.getElementById('uploadedImage');
-                uploadedImage.src = URL.createObjectURL(fileInput.files[0]);
+        function previewImage() {
+            const file = document.getElementById('imageInput').files[0];
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                document.getElementById('uploadedImage').src = reader.result;
             }
-
-            function toggleSpeech() {
-                if (!isSpeaking) {
-                    const text = document.getElementById('recipeText').innerText;
-                    speech.text = text;
-                    speechSynthesis.speak(speech);
-                    isSpeaking = true;
-                } else {
-                    speechSynthesis.cancel();
-                    isSpeaking = false;
-                }
+            if (file) {
+                reader.readAsDataURL(file);
             }
+        }
 
-            
-        </script>
-    </body>
-    </html>
+        function showGeneratingMessage() {
+            document.getElementById('generateText').innerText = 'The recipe is being generated...⏳';
+        }
+
+        function toggleSpeech() {
+            if (!isSpeaking) {
+                const text = document.getElementById('recipeText').innerText;
+                speech.text = text;
+                speechSynthesis.speak(speech);
+                isSpeaking = true;
+            } else {
+                speechSynthesis.cancel();
+                isSpeaking = false;
+            }
+        }
+    </script>
+</body>
+</html>

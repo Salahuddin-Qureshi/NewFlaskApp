@@ -18,7 +18,6 @@
             text-align: center;
             color: #333;
             padding-top: 60px;
-            /* Adjusted padding to avoid overlap with fixed nav */
         }
 
         nav {
@@ -32,7 +31,6 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            /* Ensures the nav stays on top */
         }
 
         nav .logo {
@@ -40,57 +38,6 @@
             color: #fff;
             font-weight: bold;
             padding-left: 20px;
-        }
-
-        /* Base styles for the menu */
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Hide the menu items on mobile by default */
-        nav .menu {
-            display: flex;
-        }
-
-        /* Menu toggle button for mobile */
-        nav .menu-toggle {
-            display: none;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            nav .menu {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                background-color: #2c3e50;
-                position: absolute;
-                top: 60px;
-                /* Adjust based on nav height */
-                left: 0;
-            }
-
-            nav .menu.open {
-                display: flex;
-            }
-
-            nav .menu-toggle {
-                display: block;
-            }
-
-            nav .logo {
-                margin-right: auto;
-            }
         }
 
         nav ul {
@@ -122,6 +69,42 @@
             background-color: #3498db;
         }
 
+        /* Menu toggle button for mobile */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hide the menu items on mobile by default */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: #2c3e50;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                padding: 10px 0;
+            }
+
+            nav ul.open {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+        }
+
         h1 {
             font-size: 3rem;
             color: #2c3e50;
@@ -151,13 +134,36 @@
             color: #555;
         }
 
+        .team-section {
+            margin-top: 40px;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #3498db;
+            margin-bottom: 15px;
+        }
+
         .supervisor-section {
             margin-top: 40px;
         }
 
         .supervisor-picture {
-            width: 130px;
-            height: 130px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             border: 3px solid #3498db;
             margin-top: 15px;
@@ -174,8 +180,8 @@
 <body>
 
     <nav>
-        <button class="menu-toggle" onclick="toggleMenu()">Menu</button>
         <a href="{{ url_for('landing_page') }}" class="logo">Recipe Generator</a>
+        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
         <ul class="menu">
             <li><a href="{{ url_for('about') }}">About</a></li>
             <li><a href="{{ url_for('contact') }}">Contact</a></li>
@@ -184,35 +190,44 @@
         </ul>
     </nav>
 
-    <h1>About the Project</h1>
+    <h1>About the Team</h1>
 
     <div class="profile-container">
-        <img src="{{ url_for('static', filename='images/salahuddin.jpg') }}" alt="Salahuddin Qureshi"
-            class="profile-picture">
+        <img src="{{ url_for('static', filename='images/salahuddin.jpg') }}" alt="Salahuddin Qureshi" class="profile-picture">
         <p class="description">
-            My name is <strong>Salahuddin Qureshi</strong>, and I am currently pursuing my degree in Computer Science at
-            Sukkur IBA University.
-            This project, my Final Year Project (FYP), aims to generate recipes from food images using machine learning.
-            I have solely led and developed this project, managing all aspects from design to implementation.
+            My name is <strong>Salahuddin Qureshi</strong>, and I am currently pursuing my degree in Computer Science at Sukkur IBA University. This project, my Final Year Project (FYP), aims to generate recipes from food images using machine learning. I have led the development and implementation of this project.
         </p>
+    </div>
+
+    <div class="team-section">
+        <h2>Meet the Team</h2>
+        <div class="team-container">
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/girl.jpeg') }}" alt="Mahnoor Ali">
+                <p><strong>Mahnoor</strong></p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='images/girl.jpeg') }}" alt="Ghazala Bibi">
+                <p><strong>Ghazala</strong></p>
+            </div>
+        </div>
     </div>
 
     <div class="supervisor-section">
         <h2>Supervised by</h2>
-        <img src="{{ url_for('static', filename='images/zakria.jpg') }}" alt="Dr. Zakria Jamali"
-            class="supervisor-picture">
+        <img src="{{ url_for('static', filename='images/zakria.jpg') }}" alt="Dr. Zakria Jamali" class="supervisor-picture">
         <p class="description">
-            I am honored to be guided by <strong>Dr. Zakria Jamali</strong>, my FYP supervisor, who has provided
-            invaluable support and feedback throughout this project.
+            I am honored to be guided by <strong>Dr. Zakria Jamali</strong>, my FYP supervisor, who has provided invaluable support and feedback throughout this project.
         </p>
     </div>
 
     <footer>
         &copy; 2024 Recipe Generator Project. All rights reserved.
     </footer>
+
     <script>
         function toggleMenu() {
-            const menu = document.querySelector('nav .menu');
+            const menu = document.querySelector('nav ul');
             menu.classList.toggle('open');
         }
     </script>

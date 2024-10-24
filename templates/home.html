@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,12 +104,25 @@
             margin-bottom: 30px;
         }
 
+        .welcome-section p {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .welcome-image {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
         .action-buttons {
             display: flex;
             flex-wrap: wrap;
             margin-bottom: 30px;
         }
-        .action-buttons ul{
+
+        .action-buttons ul {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
@@ -144,7 +158,7 @@
                 width: 100%;
                 background-color: #2c3e50;
                 position: absolute;
-                top: 60px; /* Adjust this value based on the height of your nav */
+                top: 60px;
                 left: 0;
                 z-index: 1000;
             }
@@ -174,12 +188,13 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Navigation Bar -->
     <nav>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         <a href="{{ url_for('landing_page') }}" class="logo">Recipe Generator</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         <div class="menu">
             <ul>
                 <li><a href="{{ url_for('get_started') }}">Get Started</a></li>
@@ -190,15 +205,18 @@
 
     <!-- Main Content -->
     <div class="container">
-        <h1>Welcome, {{ current_user.username }}!</h1>
+        <h1>Welcome, {{ current_user.username }}! 👋</h1>
         <div class="welcome-section">
-            <p>We're glad to have you here. Ready to explore new recipes?</p>
+            <p>We're so excited to help you discover amazing recipes 🍕. Ready to explore mouthwatering dishes? 🍔🍣</p>
         </div>
+
+        <!-- Pizza Image -->
+        <img src="{{ url_for('static', filename='images/pizza.jpg') }}" alt="Delicious Pizza" class="welcome-image">
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <a href="{{ url_for('get_started') }}">Generate Recipe</a>
-            <a href="{{ url_for('favorites') }}">View Favorites</a>
+            <a href="{{ url_for('get_started') }}">Generate Recipe 🚀</a>
+            <a href="{{ url_for('favorites') }}">View Favorites 💖</a>
         </div>
     </div>
 
@@ -206,6 +224,7 @@
     <footer>
         &copy; 2024 Recipe Generator. All rights reserved.
     </footer>
+
     <script>
         function toggleMenu() {
             const menu = document.querySelector('nav .menu');
@@ -213,4 +232,5 @@
         }
     </script>
 </body>
+
 </html>

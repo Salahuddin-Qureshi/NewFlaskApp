@@ -1,7 +1,6 @@
-# models.py
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from sqlalchemy import func
 
 db = SQLAlchemy()
 
@@ -10,6 +9,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(150), nullable=False)
     name = db.Column(db.String(150), nullable=False)  # Add the name field
+    
+    favorite_dishes = db.relationship('FavoriteDish', backref='user', cascade='all, delete-orphan')
     
 
 class SearchHistory(db.Model):
