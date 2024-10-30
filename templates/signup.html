@@ -91,6 +91,16 @@
                 padding: 10px 0;
             }
 
+            .error-message {
+            color: #e74c3c;
+            background-color: #f9d6d5;
+            border: 1px solid #e74c3c;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
             nav ul.open {
                 display: flex;
             }
@@ -171,11 +181,18 @@
 
     <h1>Sign Up</h1>
     <div class="form-container">
+
+        <!-- Display error message if there is an error -->
+        {% if error %}
+        <div class="error-message">{{ error }}</div>
+        {% endif %}
+
         <form method="POST">
             <input type="text" name="username" placeholder="Username" required>
             <input type="email" name="email" placeholder="Email" required>
-            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="password" name="password" placeholder="Password" required oninput="checkPasswordStrength()">
             <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+            <p id="password-strength" style="color: red; font-size: 0.9rem; margin-top: 5px;"></p>
             <button type="submit">Create Account</button>
             <a href="{{ url_for('login') }}">Already have an account? Login</a>
         </form>
@@ -184,12 +201,23 @@
     <footer>
         &copy; 2024 Recipe Generator. All rights reserved.
     </footer>
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector('nav ul');
-            menu.classList.toggle('open');
+
+<script>
+    function checkPasswordStrength() {
+        const password = document.getElementById("password").value;
+        const strengthMessage = document.getElementById("password-strength");
+
+        // Regular expression for strong password
+        const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        
+        if (!strongPasswordRegex.test(password)) {
+            strengthMessage.textContent = "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.";
+        } else {
+            strengthMessage.textContent = ""; // Clear message if password is strong
         }
-    </script>
+    }
+</script>
+
 </body>
 
 </html>

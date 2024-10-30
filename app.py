@@ -16,12 +16,28 @@ from flask_login import login_user, current_user, logout_user
 from flask import render_template
 from models import User, SearchHistory, FavoriteDish
 from sqlalchemy import func
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_mail import Mail, Message
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import render_template, request, redirect, url_for, flash
+from flask_login import login_user
+from models import User  # Assuming models is the module where User is defined
+from flask import render_template, request, redirect, url_for, flash
+from models import db, User
+import re
+
+
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipe_gen.db'
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipe_gen.db'
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -158,7 +174,11 @@ def delete_user(user_id):
     user = User.query.get_or_404(user_id)
 
     try:
-        # Delete user along with associated favorite dishes
+        # Delete all favorite dishes for the user before deleting the user
+        FavoriteDish.query.filter_by(user_id=user.id).delete()  # This deletes the favorite dishes
+        db.session.commit()  # Commit the deletion of favorite dishes
+
+        # Now delete the user
         db.session.delete(user)
         db.session.commit()
         flash('User deleted successfully!', 'success')
@@ -203,6 +223,48 @@ def site_statistics():
                            total_favorites=total_favorites,
                            top_searches=top_searches,
                            top_favorite_dishes=top_favorite_dishes)
+
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        username = request.form['username']
+        
+        # Check if username exists in the database
+        user = User.query.filter_by(username=username).first()  # Adjust based on your DB model
+        
+        if user:
+            # Store username in session to allow password reset
+            session['reset_username'] = username
+            flash("Username verified! You may reset your password now.", "info")
+            return redirect(url_for('reset_password'))
+        else:
+            flash("Username not found. Please try again.", "error")
+            return redirect(url_for('forgot_password'))
+    
+    return render_template('forgot_password.html')
+
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        try:
+            username = request.form['username']
+            new_password = request.form['password']
+            
+            # Find the user by username and update the password directly
+            user = User.query.filter_by(username=username).first()
+            if user:
+                user.password = new_password  # Directly assigning without hashing
+                db.session.commit()
+                flash("Password has been updated successfully!", "success")
+                return redirect(url_for('login'))
+            else:
+                flash("Username not found.", "danger")
+        except KeyError as e:
+            flash(f"Missing form field: {e.args[0]}", "danger")
+            return redirect(url_for('reset_password'))
+    
+    return render_template('reset_password.html')
+
 # User Loader
 @login_manager.user_loader
 def load_user(user_id):
@@ -271,34 +333,54 @@ def home():
     response.headers['Cache-Control'] = 'no-store'
     return response
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None  # Initialize error message as None
+    
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username = request.form['username']
+        password = request.form['password']
         
-        # Query the database for the user
+        # Fetch user by username
         user = User.query.filter_by(username=username).first()
-
-        if user and user.password == password:  # Direct password comparison
+        
+        # Check if user exists and if password matches
+        if user and user.password == password:  # Simple password comparison
             login_user(user)
             return redirect(url_for('home'))
         else:
-            flash('Invalid username or password')
+            error = "Invalid username or password. Please try again."
     
-    return render_template('login.html')
+    return render_template('login.html', error=error)
+
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        user = User(username=username, password=password)
-        db.session.add(user)
+        username = request.form['username']
+        password = request.form['password']
+
+        # Check if username exists
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            return render_template('signup.html', error="Username already exists. Please choose another.")
+        
+        # Password strength validation
+        strong_password_regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        if not re.match(strong_password_regex, password):
+            return render_template('signup.html', error="Password must be at least 8 characters long, include uppercase, lowercase, a number, and a special character.")
+
+        # Add new user
+        new_user = User(username=username, password=password)
+        db.session.add(new_user)
         db.session.commit()
-        flash('Account created successfully! Please log in.', 'success')
+        
         return redirect(url_for('login'))
+    
     return render_template('signup.html')
+
 
 @app.route('/about')
 def about():
@@ -339,4 +421,6 @@ def get_started():
     return render_template('get_started.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
+
