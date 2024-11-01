@@ -75,7 +75,7 @@ def predict_food(img_path):
 
 def get_gemini_response(food_item):
     try:
-        prompt = f"Generate ingredients and a recipe for {food_item}."
+        prompt = f"Generate ingredients and a recipe for {food_item} in 10 steps in roman english."
         response = gemini_model.generate_content(prompt)
         return response.text
     except Exception as e:
